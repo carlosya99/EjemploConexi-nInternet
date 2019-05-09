@@ -17,15 +17,23 @@ namespace EjemploConexionInternet
         {
             InitializeComponent();
         }
+        public String LimpiaString(String textoALimpiar)
+        {
+            String limpia = textoALimpiar;
+            Console.WriteLine(limpia);
+            limpia = limpia.Replace("'", "").Replace(";", "").Replace("-", "");
+            Console.WriteLine(limpia);
 
+            return limpia;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             MySqlConnection conexion = new ConexionBBDD().conecta();
 
             MySqlCommand comando = new MySqlCommand("" +
                 "SELECT * FROM usuarios WHERE" +
-                " usuario = '" + textBox1.Text + 
-                "' AND pass = '" + textBox2.Text + 
+                " usuario = '" + LimpiaString(textBox1.Text) + //'OR 1=1 --
+                "' AND pass = '" + LimpiaString(textBox2.Text) + 
                 "' ;", conexion);
 
             MySqlDataReader resultado = comando.ExecuteReader();
@@ -43,5 +51,6 @@ namespace EjemploConexionInternet
                 MessageBox.Show("Usuario Y/O contraseña incorrecto(s)", "ERROR");
             }
         }
+        
     }
 }
